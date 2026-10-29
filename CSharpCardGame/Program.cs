@@ -23,9 +23,16 @@ namespace CSharpCardGame
                 - TODO: We will revist this later.
              */
 
-            CardBase test = new CardBase(111, "Spades");
+            DeckBase test = new DeckBase(52);
 
-            Console.WriteLine(test);
+            test.Shuffle();
+
+            for (int i = 0; i < 52; i++)
+            {
+                Console.WriteLine($"The top card of the deck is: {test.DrawCard()}");
+            }
+
+            Console.ReadLine();
         }
     }
 }
