@@ -1,38 +1,74 @@
-﻿using System.Runtime.Intrinsics.Arm;
-
+﻿
 namespace CSharpCardGame
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            // card game project
+            // game of hi/low
 
-            /*
-            Things to represent in the project:
+            // One player is a dealer, one is the caller.
+            // before the flip, the caller calls hi or low. 
+            // the dealer then flips
+            // if the card is higher than the last card and the
+            //  caller called that then continue to the next round
+            // otherwise game over.
 
-            - Deck (of cards)
-                - Probability?
-                - How many cards are left in the deck?
-                - Initialize
-                - Shuffle
-                - Draw X Card
+            bool isPlaying = true;
+            DeckBase deck = new DeckBase(52);
 
-            - Game Loop
-                - What game are we making? 
-                - TODO: We will revist this later.
-             */
+            deck.Shuffle();
 
-            DeckBase test = new DeckBase(52);
+            CardBase current = deck.DrawCard();
 
-            test.Shuffle();
-
-            for (int i = 0; i < 52; i++)
+            while (isPlaying)
             {
-                Console.WriteLine($"The top card of the deck is: {test.DrawCard()}");
-            }
+                if (deck.GetCardsRemaining() < 1)
+                {
+                    // stop playing
+                    isPlaying = false;
+                    break;
+                }
 
-            Console.ReadLine();
+                Console.WriteLine($"The current card is: {current}");
+                CardBase newCard = deck.DrawCard();
+
+                Console.WriteLine("Is the next card (H)igh or (L)ow?");
+                string choice = Console.ReadLine().ToUpper();
+
+                // TODO: if we give bad input, it breaks. Validate This
+
+                Console.WriteLine($"The dealer flips the following card: {newCard}");
+                
+                if (choice == "H")
+                {
+                    // call is higher
+                    // only true if new > prev
+                    if (newCard.Rank > current.Rank)
+                    {
+
+                    }
+                }
+                else if (choice == "L")
+                {
+                    // call is lower
+                    // only true if new < prev
+                }
+                else
+                {
+                    // bad call
+                    throw new Exception("User made bad input and the program did not catch it.");
+                }
+
+                // if we continue
+                //      set prev card to our current card
+                // if we lost
+                //      end the game
+
+
+                // TODO: EDGE CASE: what if the card is the same
+            }
+            
         }
     }
 }

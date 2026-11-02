@@ -50,5 +50,7 @@ namespace CSharpCardGame
         {
             return $"{Rank} of {Suit}";
         }
+
+        // TODO: add comparison function
     }
 }

@@ -6,14 +6,10 @@ namespace CSharpCardGame
 {
     public class DeckBase
     {
-        // properties
         private List<CardBase> _cards;
-        private int _deckSize;
 
-        // methods
         public DeckBase(int numOfCards)
         {
-            this._deckSize = numOfCards;
             this._cards = new List<CardBase>();
             this.ConstructDeck();
         }
@@ -64,6 +60,9 @@ namespace CSharpCardGame
             this._cards = this._cards.OrderBy(_ => Random.Shared.Next()).ToList();
         }
 
-        // get number of cards (check this._cards.count)
+        public int GetCardsRemaining()
+        {
+            return this._cards.Count();
+        }
     }
 }
