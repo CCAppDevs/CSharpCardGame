@@ -3,6 +3,14 @@ namespace CSharpCardGame
 {
     internal class Program
     {
+        static bool isPlaying = true;
+
+        static void EndGame()
+        {
+            isPlaying = false;
+            Console.WriteLine("Game Over!");
+        }
+
         static void Main(string[] args)
         {
             // game of hi/low
@@ -14,7 +22,7 @@ namespace CSharpCardGame
             //  caller called that then continue to the next round
             // otherwise game over.
 
-            bool isPlaying = true;
+
             DeckBase deck = new DeckBase(52);
 
             deck.Shuffle();
@@ -31,42 +39,60 @@ namespace CSharpCardGame
                 }
 
                 Console.WriteLine($"The current card is: {current}");
+                
+                
+                
                 CardBase newCard = deck.DrawCard();
 
                 Console.WriteLine("Is the next card (H)igh or (L)ow?");
                 string choice = Console.ReadLine().ToUpper();
 
-                // TODO: if we give bad input, it breaks. Validate This
-
-                Console.WriteLine($"The dealer flips the following card: {newCard}");
-                
-                if (choice == "H")
-                {
-                    // call is higher
-                    // only true if new > prev
-                    if (newCard.Rank > current.Rank)
-                    {
-
-                    }
-                }
-                else if (choice == "L")
-                {
-                    // call is lower
-                    // only true if new < prev
-                }
-                else
+                // validate
+                if (choice != "H" && choice != "L")
                 {
                     // bad call
                     throw new Exception("User made bad input and the program did not catch it.");
                 }
 
-                // if we continue
-                //      set prev card to our current card
-                // if we lost
-                //      end the game
+                Console.WriteLine($"The dealer flips the following card: {newCard}");
+
+                int comparison = newCard.CompareTo(current);
+                string status = "";
+                string result = "";
+
+                if (comparison == 0)
+                {
+                    status = "the same";
+                    result = "This is a push";
+                    current = newCard;
+                    break;
+                }
+
+                if (comparison == 1)
+                {
+                    status = "Higher";
+                }
+                else
+                {
+                    status = "Lower";
+                }
 
 
-                // TODO: EDGE CASE: what if the card is the same
+                if ((choice == "H" && comparison == 1) || (choice == "L" && comparison == -1))
+                {
+                    // we are correct (win)
+                    result = "You Win";
+                }
+                else
+                {
+                    result = "You Lose";
+                }
+
+                string message = $"The card was {status}! {result}.";
+
+                Console.WriteLine(message);
+
+                current = newCard;
             }
             
         }

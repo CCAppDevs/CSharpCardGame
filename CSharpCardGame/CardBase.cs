@@ -5,7 +5,7 @@ using System.Text;
 namespace CSharpCardGame
 {
 
-    public class CardBase
+    public class CardBase : IComparable<CardBase>
     {
         // what a card knows
         private int _rank { get; }
@@ -51,6 +51,31 @@ namespace CSharpCardGame
             return $"{Rank} of {Suit}";
         }
 
-        // TODO: add comparison function
+        // simple helper function (getter)
+        public int GetRank()
+        {
+            return this._rank;
+        }
+
+        public int CompareTo(CardBase? other)
+        {
+            if (other == null)
+            {
+                return 0;
+            }
+
+            if (this._rank > other.GetRank())
+            {
+                return 1;
+            }
+            else if (this._rank < other.GetRank())
+            {
+                return -1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
     }
 }
