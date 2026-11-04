@@ -86,6 +86,9 @@ namespace CSharpCardGame
                 else
                 {
                     result = "You Lose";
+                    Console.WriteLine("Game Over!");
+                    isPlaying = false;
+                    break;
                 }
 
                 string message = $"The card was {status}! {result}.";
